@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#8D8E8F"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#2196F3">
+
+        <TextView
+            android:id="@+id/dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:text="规则"
+            android:textSize="30sp" />
+
+        <ImageView
+            android:id="@+id/img_header_close"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="9dp"
+            android:layout_marginRight="9dp"
+            android:src="@drawable/close" />
+    </RelativeLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="25dp"
+                android:gravity="left"
+                android:text="条件类型"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/trade_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/join_types" />
+        </TableRow>
+
+        <TableRow android:paddingTop="20dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="25dp"
+                android:gravity="left"
+                android:text="规则类型"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/rule_type"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:entries="@array/rule_types" />
+        </TableRow>
+
+        <TableRow android:paddingTop="20dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="25dp"
+                android:gravity="left"
+                android:text="操作类型"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/op_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/op_types" />
+        </TableRow>
+
+        <TableRow android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="25dp"
+                android:gravity="left"
+                android:text="操作值"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/op_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="输入值" />
+        </TableRow>
+    </TableLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="删除" />
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="保存" />
+    </RelativeLayout>
+</LinearLayout>

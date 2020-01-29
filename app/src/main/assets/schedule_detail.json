@@ -1,0 +1,36 @@
+{
+  "data": {
+    "id": 1,
+    "userId": 1,
+    "symbolId": 1,
+    "name": "-10%买进",
+    "type": 0,
+    "amount": 23434.3243,
+    "success": 0,
+    "failed": 0,
+    "symbolName": "eosusdt",
+    "symbolDesc": "EOS/USDT",
+    "symbolIcon": "eos",
+    "symbolGroup": "EOS",
+    "status": 1,
+    "rules": [
+      {
+        "id": 1,
+        "userId": 1,
+        "symbolId": 1,
+        "scheduleId": 1,
+        "ruleType": 1,
+        "joinType": 1,
+        "opType": 1,
+        "value": "-10",
+        "status": 1,
+        "gmtCreate": "2020-01-13 10:39:18",
+        "gmtModified": "2020-01-13 10:39:19"
+      }
+    ],
+    "gmtCreate": "2020-01-13 05:23:46",
+    "gmtModified": "2020-01-13 05:23:48"
+  },
+  "message": "SUCCESS",
+  "retCode": 0
+}

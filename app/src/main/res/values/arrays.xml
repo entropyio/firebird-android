@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="trade_types">
+        <item>买进</item>
+        <item>卖出</item>
+    </string-array>
+
+    <string-array name="join_types">
+        <item>并且</item>
+        <item>或者</item>
+    </string-array>
+
+    <string-array name="rule_types">
+        <item>收益涨幅</item>
+        <item>价格涨幅</item>
+    </string-array>
+
+    <string-array name="op_types">
+        <item>等于</item>
+        <item>不等于</item>
+        <item>大于</item>
+        <item>大于等于</item>
+        <item>小于</item>
+        <item>小于等于</item>
+        <item>包含</item>
+        <item>不包含</item>
+    </string-array>
+</resources>

@@ -1,0 +1,24 @@
+{
+  "data": {
+    "id": 1,
+    "userId": 1,
+    "symbolId": 1,
+    "holdPrice": 2.4086956521739133,
+    "holdAmount": 490,
+    "yestBenefit": 26.802999999999987,
+    "totalBenefit": 168.26086956521738,
+    "price": 2.7395,
+    "amount": 0,
+    "total": 1342.355,
+    "benefit": 162.09413043478247,
+    "rate": 13.733754512635366,
+    "symbolName": "eosusdt",
+    "symbolDesc": "EOS/USDT",
+    "symbolIcon": "eos",
+    "symbolGroup": "EOS",
+    "status": 0,
+    "gmtCreate": "2020-01-03 05:07:37",
+    "gmtModified": "2020-01-09 18:07:47"
+  },
+  "retCode": 0
+}

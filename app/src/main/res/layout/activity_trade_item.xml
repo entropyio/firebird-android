@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*"
+        android:padding="10dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="卖出"
+                android:layout_gravity="left"
+                android:id="@+id/trade_type" />
+
+            <TextView
+                android:text="EOS/USDT"
+                android:id="@+id/trade_name" />
+
+            <TextView
+                android:text="2.35"
+                android:id="@+id/trade_price" />
+
+            <TextView
+                android:text="6000.00"
+                android:layout_gravity="right"
+                android:id="@+id/trade_total" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp">
+
+            <ImageView
+                android:id="@+id/trade_icon"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="left"
+                android:src="@drawable/eos" />
+
+            <TextView
+                android:text="2019-12-17 15:30:20"
+                android:id="@+id/trade_time" />
+
+            <TextView
+                android:text="100"
+                android:id="@+id/trade_amount" />
+
+            <TextView
+                android:text="进行中"
+                android:layout_gravity="right"
+                android:id="@+id/trade_status" />
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

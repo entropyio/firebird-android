@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:stretchColumns="*">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/trade_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="并且" />
+
+            <TextView
+                android:id="@+id/rule_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收益" />
+
+            <TextView
+                android:id="@+id/op_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="大于" />
+
+            <TextView
+                android:id="@+id/op_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20" />
+        </TableRow>
+    </TableLayout>
+
+</RelativeLayout>

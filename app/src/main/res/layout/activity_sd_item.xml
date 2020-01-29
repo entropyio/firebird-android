@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- benifit -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/sd_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="2019-12-30 12:40:23" />
+
+        <TextView
+            android:id="@+id/sd_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sd_time"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:text="500.00" />
+
+        <TextView
+            android:id="@+id/sd_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="2.36" />
+
+        <TextView
+            android:id="@+id/sd_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sd_price"
+            android:layout_centerHorizontal="true"
+            android:text="100" />
+
+        <TextView
+            android:id="@+id/sd_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="定投失败" />
+
+        <TextView
+            android:id="@+id/sd_reason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/sd_status"
+            android:layout_alignParentRight="true"
+            android:text="余额不足" />
+
+    </RelativeLayout>
+</LinearLayout>

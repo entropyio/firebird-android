@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#8D8E8F"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#2196F3">
+
+        <TextView
+            android:id="@+id/dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:text="交易"
+            android:textSize="30sp" />
+
+        <ImageView
+            android:id="@+id/img_header_close"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="9dp"
+            android:layout_marginRight="9dp"
+            android:src="@drawable/close" />
+    </RelativeLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <TableRow>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="25dp"
+                android:gravity="left"
+                android:text="交易类型"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/trade_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:entries="@array/trade_types" />
+        </TableRow>
+
+        <TableRow android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="25dp"
+                android:gravity="left"
+                android:text="交易价格"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/op_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="输入值" />
+        </TableRow>
+
+        <TableRow android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="25dp"
+                android:gravity="left"
+                android:text="交易数量"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/op_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="输入值" />
+        </TableRow>
+
+        <TableRow android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="25dp"
+                android:gravity="left"
+                android:text="交易备注"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/op_reason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="备注" />
+        </TableRow>
+
+        <TableRow android:paddingTop="10dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="25dp"
+                android:gravity="left"
+                android:text="交易时间"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/op_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="date" />
+        </TableRow>
+    </TableLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="取消" />
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="保存" />
+    </RelativeLayout>
+</LinearLayout>
