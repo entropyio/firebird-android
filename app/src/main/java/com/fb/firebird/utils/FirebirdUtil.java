@@ -1,9 +1,9 @@
 package com.fb.firebird.utils;
 
 public class FirebirdUtil {
-    public static final boolean isDebug = true;
+    public static final boolean isDebug = false;
 
-    public static final String HOST_URL = "http://192.168.1.103:8080";
+    public static final String HOST_URL = "http://192.168.1.106:8080";
 
     public static final int DEFAULT_PAGE_NUMBER = 1;
 

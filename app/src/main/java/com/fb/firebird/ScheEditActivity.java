@@ -3,25 +3,33 @@ package com.fb.firebird;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.fb.firebird.dialog.RuleDialog;
 import com.fb.firebird.enums.JoinTypeEnum;
 import com.fb.firebird.enums.OpTypeEnum;
 import com.fb.firebird.enums.RuleTypeEnum;
+import com.fb.firebird.enums.ScheduleStatusEnum;
+import com.fb.firebird.enums.TradeTypeEnum;
 import com.fb.firebird.json.ResultData;
 import com.fb.firebird.model.RuleItemData;
 import com.fb.firebird.model.ScheduleItemData;
 import com.fb.firebird.utils.FirebirdUtil;
+import com.fb.firebird.utils.FormatUtil;
 import com.fb.firebird.utils.IconUtil;
+import com.fb.firebird.utils.JsonUtil;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -39,6 +47,13 @@ public class ScheEditActivity extends BaseActivity<String> implements CallbackLi
 
     private RuleDialog ruleDialog;
 
+    // edit item
+    private EditText scheName;
+    private EditText scheAmount;
+    private RadioButton radioBuy;
+    private RadioButton radioSold;
+    private Spinner scheStatus;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,16 +62,36 @@ public class ScheEditActivity extends BaseActivity<String> implements CallbackLi
         Intent intent = getIntent();
         item = (ScheduleItemData) intent.getSerializableExtra("item");
 
-        // set title
+        scheName = this.findViewById(R.id.sche_name);
+        scheAmount = this.findViewById(R.id.sche_amount);
+        scheStatus = this.findViewById(R.id.sche_status);
+        radioBuy = this.findViewById(R.id.radio_buy);
+        radioSold = this.findViewById(R.id.radio_sold);
+
         if (null != item && item.getScheduleId() > 0) {
+            // set title
             ImageView iconView = this.findViewById(R.id.img_header_icon);
             iconView.setImageResource(IconUtil.getIcon(item.getSymbolGroup().toLowerCase()));
 
             TextView titleView = this.findViewById(R.id.text_header_title);
             titleView.setText(item.getSymbolDesc());
+
+            // set data
+            scheName.setText(item.getName());
+            scheAmount.setText(String.valueOf(item.getAmount()));
+            scheStatus.setSelection(item.getStatus() - 1, true);
+            if(item.getType() == TradeTypeEnum.BUY.getCode()){
+                radioBuy.setChecked(true);
+                radioSold.setChecked(false);
+            }else if(item.getType() == TradeTypeEnum.SOLD.getCode()){
+                radioBuy.setChecked(false);
+                radioSold.setChecked(true);
+            }
         } else {
             item = new ScheduleItemData();
             item.setRuleList(new ArrayList<RuleItemData>());
+            radioBuy.setChecked(true);
+            radioSold.setChecked(false);
         }
 
         // dialog
@@ -96,7 +131,6 @@ public class ScheEditActivity extends BaseActivity<String> implements CallbackLi
                 ScheEditActivity.this.finish();
             }
         });
-
     }
 
     public void addRuleItem(View view) {
@@ -111,11 +145,17 @@ public class ScheEditActivity extends BaseActivity<String> implements CallbackLi
     }
 
     public void doSave() {
-        Map<String, Object> paramsMap = new HashMap<>();
-//        String params = String.format(Locale.US, "userId=%d&symbolId=%d&status=%d&price=%f&amount=%f&type=%d",
-//                item.getUserId(), item.getSymbolId(), TradeStatusEnum.SUCCESS.getCode(),
-//                price, amount, opType);
-        httpPost(FirebirdUtil.URL_SCHEDULE_SAVE, paramsMap);
+        item.setName(scheName.getText().toString());
+        item.setAmount(Double.parseDouble(scheAmount.getText().toString()));
+        item.setStatus(scheStatus.getSelectedItemPosition() + 1);
+        if(radioBuy.isChecked()){
+           item.setType(TradeTypeEnum.BUY.getCode());
+        }else if(radioSold.isChecked()){
+            item.setType(TradeTypeEnum.SOLD.getCode());
+        }
+        Log.d(TAG, JsonUtil.toJSONString(item));
+
+        httpPost(FirebirdUtil.URL_SCHEDULE_SAVE, JsonUtil.toMap(item));
     }
 
     @Override
@@ -135,6 +175,7 @@ public class ScheEditActivity extends BaseActivity<String> implements CallbackLi
         List<RuleItemData> ruleList = item.getRuleList();
         if (null == ruleList) {
             ruleList = new ArrayList<>();
+            item.setRuleList(ruleList);
         }
         switch (type) {
             case FirebirdUtil.OPT_ADD: {

@@ -144,7 +144,6 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
         }
         view.setText(text);
 
-        Log.d(TAG, colorType + "");
         BigDecimal color = new BigDecimal(colorType);
         BigDecimal zero = new BigDecimal(0.0);
         if (color.compareTo(zero) > 0) {

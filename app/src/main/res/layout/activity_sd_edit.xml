@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -25,9 +26,9 @@
             android:textSize="24sp" />
     </LinearLayout>
 
-    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         card_view:cardCornerRadius="5dp"
         card_view:cardElevation="5dp">
@@ -41,10 +42,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@null"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:text="定投数量"
+                android:text="定投信息"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -53,71 +53,112 @@
                 android:layout_height="0.5dp"
                 android:background="@color/slategray" />
 
-            <EditText
-                android:id="@+id/editText_amount"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:paddingTop="10dp"
-                android:hint="输入数量"
-                android:textSize="20sp"
-                android:inputType="number|numberDecimal" />
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:paddingTop="10dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/label_name"
+                    android:text="定投名称:"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"/>
+
+                <EditText
+                    android:id="@+id/sche_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:hint="输入名称"
+                    android:layout_toRightOf="@+id/label_name"
+                    android:textSize="20sp"
+                    android:inputType="number|numberDecimal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:paddingTop="10dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/label_amount"
+                    android:layout_below="@+id/label_name"
+                    android:text="定投数量:"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"/>
+
+                <EditText
+                    android:id="@+id/sche_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:hint="输入数量"
+                    android:textSize="20sp"
+                    android:layout_below="@+id/sche_name"
+                    android:layout_toRightOf="@+id/label_name"
+                    android:inputType="number|numberDecimal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:paddingTop="10dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/label_type"
+                    android:layout_below="@+id/label_amount"
+                    android:text="定投类型:"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"/>
+
+                <RadioGroup
+                    android:id="@+id/radio_type"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_below="@+id/sche_amount"
+                    android:layout_toRightOf="@+id/label_type"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radio_buy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="买进"
+                        android:checked="true" />
+
+                    <RadioButton
+                        android:id="@+id/radio_sold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="卖出" />
+                </RadioGroup>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:paddingTop="10dp"
+                    android:layout_height="50dp"
+                    android:id="@+id/label_status"
+                    android:layout_below="@+id/label_type"
+                    android:text="定投状态:"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"/>
+
+                <Spinner
+                    android:id="@+id/sche_status"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_below="@+id/radio_type"
+                    android:layout_toRightOf="@+id/label_status"
+                    android:entries="@array/sche_status" />
+            </RelativeLayout>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_margin="5dp"
-        card_view:cardCornerRadius="5dp"
-        card_view:cardElevation="5dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:text="定投类型"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/slategray" />
-
-            <RadioGroup
-                android:id="@+id/radio_type"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:layout_below="@+id/label_type"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/radio_buy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="买进"
-                    android:checked="true" />
-
-                <RadioButton
-                    android:id="@+id/radio_sold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:text="卖出" />
-            </RadioGroup>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:layout_margin="5dp"
@@ -127,8 +168,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/label_rule"
@@ -152,8 +193,8 @@
                 android:id="@+id/label_separate"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/slategray"
-                android:layout_below="@+id/label_rule" />
+                android:layout_below="@+id/label_rule"
+                android:background="@color/slategray" />
 
             <ListView
                 android:id="@+id/listveiw_rule"
@@ -185,7 +226,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="USDT"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:textSize="18sp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

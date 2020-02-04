@@ -25,4 +25,10 @@
         <item>包含</item>
         <item>不包含</item>
     </string-array>
+
+    <string-array name="sche_status">
+        <item>进行中</item>
+        <item>已暂停</item>
+        <item>已终止</item>
+    </string-array>
 </resources>

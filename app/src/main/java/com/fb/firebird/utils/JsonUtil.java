@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.util.Collections;
+import java.util.Map;
 
 public class JsonUtil {
 
@@ -50,4 +52,17 @@ public class JsonUtil {
         return gson.fromJson(getJson(context, fileName), type);
     }
 
+    public static String toJSONString(Object obj) {
+        Gson gson = new Gson();
+        return gson.toJson(obj);
+    }
+
+    public static Map<String, Object> toMap(Object obj){
+        if(obj == null){
+            return Collections.emptyMap();
+        }
+        Gson gson = new Gson();
+
+        return gson.fromJson(gson.toJson(obj), Map.class);
+    }
 }
