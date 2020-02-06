@@ -14,6 +14,15 @@ public enum StatusEnum {
     DISABLE(2, "已禁用"),
     DELETED(3, "已删除");
 
+    private static Map<Integer, StatusEnum> map = new HashMap<>();
+
+    static {
+        StatusEnum[] types = StatusEnum.values();
+        for (int i = 0; i < types.length; i++) {
+            map.put(types[i].getCode(), types[i]);
+        }
+    }
+
     @Getter
     private final int code;
     @Getter
@@ -22,15 +31,6 @@ public enum StatusEnum {
     StatusEnum(int code, String desc) {
         this.code = code;
         this.desc = desc;
-    }
-
-    private static Map<Integer, StatusEnum> map = new HashMap<>();
-
-    static {
-        StatusEnum[] types = StatusEnum.values();
-        for (int i = 0; i < types.length; i++) {
-            map.put(types[i].getCode(), types[i]);
-        }
     }
 
     public static StatusEnum getEnum(int code) {

@@ -14,6 +14,15 @@ public enum ScheduleStatusEnum {
     PAUSED(2, "已暂停"),
     FINISHED(3, "已终止");
 
+    private static Map<Integer, ScheduleStatusEnum> map = new HashMap<>();
+
+    static {
+        ScheduleStatusEnum[] types = ScheduleStatusEnum.values();
+        for (int i = 0; i < types.length; i++) {
+            map.put(types[i].getCode(), types[i]);
+        }
+    }
+
     @Getter
     private final int code;
     @Getter
@@ -22,15 +31,6 @@ public enum ScheduleStatusEnum {
     ScheduleStatusEnum(int code, String desc) {
         this.code = code;
         this.desc = desc;
-    }
-
-    private static Map<Integer, ScheduleStatusEnum> map = new HashMap<>();
-
-    static {
-        ScheduleStatusEnum[] types = ScheduleStatusEnum.values();
-        for (int i = 0; i < types.length; i++) {
-            map.put(types[i].getCode(), types[i]);
-        }
     }
 
     public static ScheduleStatusEnum getEnum(int code) {

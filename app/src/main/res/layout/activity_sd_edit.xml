@@ -7,23 +7,23 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="6dp">
 
         <ImageView
             android:id="@+id/img_header_icon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:src="@drawable/eos" />
 
         <TextView
             android:id="@+id/text_header_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
+            android:layout_height="28dp"
+            android:paddingLeft="10dp"
             android:text="EOS/USDT"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
@@ -36,8 +36,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -56,74 +56,74 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:paddingTop="10dp"
-                    android:layout_height="50dp"
                     android:id="@+id/label_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="10dp"
                     android:text="定投名称:"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"/>
+                    android:textSize="20sp" />
 
                 <EditText
                     android:id="@+id/sche_name"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:paddingTop="10dp"
-                    android:paddingLeft="10dp"
-                    android:hint="输入名称"
                     android:layout_toRightOf="@+id/label_name"
-                    android:textSize="20sp"
-                    android:inputType="number|numberDecimal" />
+                    android:hint="输入名称"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:paddingTop="10dp"
-                    android:layout_height="50dp"
                     android:id="@+id/label_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_below="@+id/label_name"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="10dp"
                     android:text="定投数量:"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"/>
+                    android:textSize="20sp" />
 
                 <EditText
                     android:id="@+id/sche_amount"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:paddingTop="10dp"
-                    android:paddingLeft="10dp"
-                    android:hint="输入数量"
-                    android:textSize="20sp"
                     android:layout_below="@+id/sche_name"
                     android:layout_toRightOf="@+id/label_name"
-                    android:inputType="number|numberDecimal" />
+                    android:hint="输入数量"
+                    android:inputType="number|numberDecimal"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:textSize="20sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:paddingTop="10dp"
-                    android:layout_height="50dp"
                     android:id="@+id/label_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_below="@+id/label_amount"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="10dp"
                     android:text="定投类型:"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"/>
+                    android:textSize="20sp" />
 
                 <RadioGroup
                     android:id="@+id/radio_type"
                     android:layout_width="fill_parent"
                     android:layout_height="50dp"
-                    android:paddingTop="10dp"
-                    android:paddingLeft="10dp"
                     android:layout_below="@+id/sche_amount"
                     android:layout_toRightOf="@+id/label_type"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp">
 
                     <RadioButton
                         android:id="@+id/radio_buy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="买进"
-                        android:checked="true" />
+                        android:checked="true"
+                        android:text="买进" />
 
                     <RadioButton
                         android:id="@+id/radio_sold"
@@ -134,25 +134,25 @@
                 </RadioGroup>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:paddingTop="10dp"
-                    android:layout_height="50dp"
                     android:id="@+id/label_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_below="@+id/label_type"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="10dp"
                     android:text="定投状态:"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"/>
+                    android:textSize="20sp" />
 
                 <Spinner
                     android:id="@+id/sche_status"
                     android:layout_width="fill_parent"
                     android:layout_height="50dp"
-                    android:gravity="center_horizontal"
-                    android:paddingTop="10dp"
-                    android:paddingLeft="10dp"
                     android:layout_below="@+id/radio_type"
                     android:layout_toRightOf="@+id/label_status"
-                    android:entries="@array/sche_status" />
+                    android:entries="@array/sche_status"
+                    android:gravity="center_horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp" />
             </RelativeLayout>
 
         </LinearLayout>
@@ -225,8 +225,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="USDT"
                 android:layout_alignParentEnd="true"
+                android:text="USDT"
                 android:textSize="18sp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

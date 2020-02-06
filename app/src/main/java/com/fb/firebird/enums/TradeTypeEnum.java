@@ -13,6 +13,15 @@ public enum TradeTypeEnum {
     BUY(1, "买进"),
     SOLD(2, "卖出");
 
+    private static Map<Integer, TradeTypeEnum> map = new HashMap<>();
+
+    static {
+        TradeTypeEnum[] types = TradeTypeEnum.values();
+        for (int i = 0; i < types.length; i++) {
+            map.put(types[i].getCode(), types[i]);
+        }
+    }
+
     @Getter
     private final int code;
     @Getter
@@ -21,15 +30,6 @@ public enum TradeTypeEnum {
     TradeTypeEnum(int code, String desc) {
         this.code = code;
         this.desc = desc;
-    }
-
-    private static Map<Integer, TradeTypeEnum> map = new HashMap<>();
-
-    static {
-        TradeTypeEnum[] types = TradeTypeEnum.values();
-        for (int i = 0; i < types.length; i++) {
-            map.put(types[i].getCode(), types[i]);
-        }
     }
 
     public static TradeTypeEnum getEnum(int code) {

@@ -14,6 +14,15 @@ public enum TradeStatusEnum {
     SUCCESS(2, "已完成"),
     FAILED(3, "已失败");
 
+    private static Map<Integer, TradeStatusEnum> map = new HashMap<>();
+
+    static {
+        TradeStatusEnum[] types = TradeStatusEnum.values();
+        for (int i = 0; i < types.length; i++) {
+            map.put(types[i].getCode(), types[i]);
+        }
+    }
+
     @Getter
     private final int code;
     @Getter
@@ -22,15 +31,6 @@ public enum TradeStatusEnum {
     TradeStatusEnum(int code, String desc) {
         this.code = code;
         this.desc = desc;
-    }
-
-    private static Map<Integer, TradeStatusEnum> map = new HashMap<>();
-
-    static {
-        TradeStatusEnum[] types = TradeStatusEnum.values();
-        for (int i = 0; i < types.length; i++) {
-            map.put(types[i].getCode(), types[i]);
-        }
     }
 
     public static TradeStatusEnum getEnum(int code) {

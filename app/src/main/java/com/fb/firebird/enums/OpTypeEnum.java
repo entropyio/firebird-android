@@ -19,6 +19,15 @@ public enum OpTypeEnum {
     CONTAIN(7, "包含"),
     NOT_CONTAIN(8, "不包含");
 
+    private static Map<Integer, OpTypeEnum> map = new HashMap<>();
+
+    static {
+        OpTypeEnum[] types = OpTypeEnum.values();
+        for (int i = 0; i < types.length; i++) {
+            map.put(types[i].getCode(), types[i]);
+        }
+    }
+
     @Getter
     private final int code;
     @Getter
@@ -27,15 +36,6 @@ public enum OpTypeEnum {
     OpTypeEnum(int code, String desc) {
         this.code = code;
         this.desc = desc;
-    }
-
-    private static Map<Integer, OpTypeEnum> map = new HashMap<>();
-
-    static {
-        OpTypeEnum[] types = OpTypeEnum.values();
-        for (int i = 0; i < types.length; i++) {
-            map.put(types[i].getCode(), types[i]);
-        }
     }
 
     public static OpTypeEnum getEnum(int code) {

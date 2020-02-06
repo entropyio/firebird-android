@@ -2,15 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fade_blue"
     android:orientation="vertical"
     android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:background="@drawable/fade_blue">
+    android:paddingRight="20dp">
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:padding="5dp"
+        android:layout_height="70dp"
         android:stretchColumns="*">
 
         <TableRow
@@ -43,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="0.00"
-                android:textSize="30sp" />
+                android:textSize="26sp" />
 
             <TextView
                 android:id="@+id/text_benefit_rate"
@@ -51,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="0.00%"
-                android:textSize="30sp" />
+                android:textSize="26sp" />
         </TableRow>
     </TableLayout>
 
@@ -59,7 +58,6 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
         android:stretchColumns="*">
 
         <TableRow
@@ -91,8 +89,7 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/text_amount_now"

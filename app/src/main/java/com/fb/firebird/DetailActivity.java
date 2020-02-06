@@ -3,6 +3,7 @@ package com.fb.firebird;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fb.firebird.chart.LineChartManager;
@@ -14,7 +15,10 @@ import com.fb.firebird.json.ResultData;
 import com.fb.firebird.json.UserAccountVO;
 import com.fb.firebird.model.HomeItemData;
 import com.fb.firebird.model.LineDataBean;
+import com.fb.firebird.utils.AesUtil;
 import com.fb.firebird.utils.FirebirdUtil;
+import com.fb.firebird.utils.FormatUtil;
+import com.fb.firebird.utils.IconUtil;
 import com.fb.firebird.utils.JsonUtil;
 import com.github.mikephil.charting.charts.LineChart;
 import com.google.android.material.tabs.TabLayout;
@@ -24,7 +28,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 
@@ -36,6 +39,8 @@ public class DetailActivity extends BaseActivity<UserAccountVO> {
     private HomeItemData item;
 
     private List<LineDataBean> holdRateList;
+    private List<LineDataBean> highRateList;
+    private List<LineDataBean> lowRateList;
 
     private List<LineDataBean> holdPriceList;
     private List<LineDataBean> highPriceList;
@@ -50,6 +55,20 @@ public class DetailActivity extends BaseActivity<UserAccountVO> {
     private TextView nowText;
     private TextView holdText;
     private TextView allText;
+    private TextView priceText;
+    private Runnable runnable = new Runnable() {
+        public void run() {
+            this.update();
+            mHandler.postDelayed(this, 1000 * 5);// 间隔5秒
+        }
+
+        void update() {
+            Map<String, Object> paramsMap = new HashMap<>();
+            paramsMap.put("userId", item.getUserId());
+            paramsMap.put("symbolId", item.getSymbolId());
+            httpPost(FirebirdUtil.URL_ACCOUNT_DETAIL, paramsMap, false);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +77,12 @@ public class DetailActivity extends BaseActivity<UserAccountVO> {
 
         Intent intent = getIntent();
         item = (HomeItemData) intent.getSerializableExtra("item");
-        this.setTitle(item.getSymbolDesc());
+
+        // set header
+        TextView titleView = this.findViewById(R.id.text_header_title);
+        ImageView imgView = this.findViewById(R.id.img_header_icon);
+        titleView.setText(item.getSymbolDesc());
+        imgView.setImageResource(IconUtil.getIcon(item.getSymbolGroup().toLowerCase()));
 
         // text views
         totalText = this.findViewById(R.id.text_amount_total);
@@ -66,6 +90,7 @@ public class DetailActivity extends BaseActivity<UserAccountVO> {
         nowText = this.findViewById(R.id.text_amount_now);
         holdText = this.findViewById(R.id.text_amount_hold);
         allText = this.findViewById(R.id.text_amount_benefit);
+        priceText = this.findViewById(R.id.text_price);
 
         // tab
         TabLayout tabs = findViewById(R.id.tab_chart);
@@ -102,6 +127,14 @@ public class DetailActivity extends BaseActivity<UserAccountVO> {
             paramsMap.put("symbolId", item.getSymbolId());
             httpPost(FirebirdUtil.URL_ACCOUNT_DETAIL, paramsMap);
         }
+
+        mHandler.postDelayed(runnable, 1000 * 5);// 间隔5秒
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mHandler.removeCallbacks(runnable);
     }
 
     @Override
@@ -123,6 +156,7 @@ public class DetailActivity extends BaseActivity<UserAccountVO> {
         this.setViewText(nowText, account.getBenefit(), null, account.getBenefit());
         this.setViewText(holdText, account.getYestBenefit(), null, account.getYestBenefit());
         this.setViewText(allText, account.getTotalBenefit(), null, account.getTotalBenefit());
+        this.setViewText(priceText, account.getPrice(), 4, " ", account.getPrice() - account.getHoldPrice());
     }
 
     public void showBenefits(View view) {
@@ -167,7 +201,15 @@ public class DetailActivity extends BaseActivity<UserAccountVO> {
             setChartData(chartType, benefitVOList);
             showChartView(chartType);
         } else {
-            String params = String.format(Locale.US, "userId=%d&symbolId=%d", item.getUserId(), item.getSymbolId());
+            Map<String, Object> paramsMap = new HashMap<>();
+            paramsMap.put("userId", item.getUserId());
+            paramsMap.put("ts", 1579760667789l);
+            paramsMap.put("token", "6c1e5239c801e8f004ac5c68ad23bea4");
+            paramsMap.put("symbolId", item.getSymbolId());
+            paramsMap.put("pageNumber", 1);
+            paramsMap.put("pageSize", 30);
+
+            String params = "q=" + AesUtil.encrypt(FormatUtil.getHttpParams(paramsMap));
             byte[] postData = params.getBytes();
             showLoading();
             HttpUtil.getUtil().httpPost(FirebirdUtil.URL_DATA_LIST, postData,
@@ -212,11 +254,30 @@ public class DetailActivity extends BaseActivity<UserAccountVO> {
         maxValue = 0.0f;
         if (chartType == CHART_TYPE_BENEFIT) {
             holdRateList = new ArrayList<>();
+            highRateList = new ArrayList<>();
+            lowRateList = new ArrayList<>();
+
             for (int i = dataList.size() - 1; i > 0; i--) {
                 vo = dataList.get(i);
                 bean = new LineDataBean(vo.getGmtCreate(), vo.getHoldRate());
                 holdRateList.add(bean);
                 updateMinMaxValue(vo.getHoldRate());
+
+                double rate = 0.0;
+                if (vo.getHoldPrice() != 0) {
+                    rate = (vo.getHighPrice() - vo.getHoldPrice()) * 100 / vo.getHoldPrice();
+                }
+                bean = new LineDataBean(vo.getGmtCreate(), rate);
+                highRateList.add(bean);
+                updateMinMaxValue(rate);
+
+                rate = 0.0;
+                if (vo.getHoldPrice() != 0) {
+                    rate = (vo.getLowPrice() - vo.getHoldPrice()) * 100 / vo.getHoldPrice();
+                }
+                bean = new LineDataBean(vo.getGmtCreate(), rate);
+                lowRateList.add(bean);
+                updateMinMaxValue(rate);
             }
         } else if (chartType == CHART_TYPE_PRICE) {
             holdPriceList = new ArrayList<>();
@@ -252,15 +313,22 @@ public class DetailActivity extends BaseActivity<UserAccountVO> {
         lineChart = this.findViewById(R.id.lineChart);
         lineChart.clear();
 
-        lineChartManager = new LineChartManager(lineChart, (float) minValue, (float) maxValue);
+        int buffer = 1;
+        if (maxValue >= 10.0 || minValue <= -10.0) {
+            buffer = 5;
+        }
+
+        lineChartManager = new LineChartManager(lineChart, (float) minValue - buffer, (float) maxValue + buffer);
 
         if (chartType == CHART_TYPE_BENEFIT) {
-            lineChartManager.showLineChart(holdRateList, "收益率", getResources().getColor(R.color.blue));
+            lineChartManager.showLineChart(holdRateList, "持有收益", getResources().getColor(R.color.blue));
+            lineChartManager.addLine(highRateList, "最高收益", getResources().getColor(R.color.positive));
+            lineChartManager.addLine(lowRateList, "最低收益", getResources().getColor(R.color.negative));
         } else if (chartType == CHART_TYPE_PRICE) {
             //展示图表
-            lineChartManager.showLineChart(holdPriceList, "我的收益", getResources().getColor(R.color.blue));
-            lineChartManager.addLine(highPriceList, "最大收益", getResources().getColor(R.color.positive));
-            lineChartManager.addLine(lowPriceList, "最小收益", getResources().getColor(R.color.negative));
+            lineChartManager.showLineChart(holdPriceList, "持有价格", getResources().getColor(R.color.blue));
+            lineChartManager.addLine(highPriceList, "最高价格", getResources().getColor(R.color.positive));
+            lineChartManager.addLine(lowPriceList, "最低价格", getResources().getColor(R.color.negative));
             //设置曲线填充色 以及 MarkerView
 //        Drawable drawable = getResources().getDrawable(R.drawable.fade_blue);
 //        lineChartManager.setChartFillDrawable(drawable);

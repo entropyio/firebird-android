@@ -37,11 +37,9 @@ import java.util.Map;
 
 public class BenefitActivity extends BaseActivity<BenefitVO> {
     private static final String TAG = BenefitActivity.class.getSimpleName();
-    private HomeItemData item;
-
-    private HorizontalBarChart barChart;
     protected Typeface tfLight;
-
+    private HomeItemData item;
+    private HorizontalBarChart barChart;
     private List<BenefitVO> chartData;
 
     @Override
@@ -156,8 +154,8 @@ public class BenefitActivity extends BaseActivity<BenefitVO> {
 
     @Override
     public void updateData(ResultData<BenefitVO> jsonData) {
-        if (jsonData.getRetCode() != 0) {
-            showMessage(jsonData.getMessage());
+        if (jsonData.getRetCode() != 0 || null == jsonData.getDataList()) {
+            showMessage("无收益数据");
             return;
         }
 

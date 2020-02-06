@@ -40,6 +40,19 @@ public class HomeActivity extends BaseActivity<UserAccountVO> {
     private TextView nowText;
     private TextView holdText;
     private TextView allText;
+    private Runnable runnable = new Runnable() {
+        public void run() {
+            this.update();
+            mHandler.postDelayed(this, 1000 * 5);// 间隔5秒
+        }
+
+        void update() {
+            Map<String, Object> paramsMap = new HashMap<>();
+            paramsMap.put("userId", userId);
+            paramsMap.put("t", new Date().getTime());
+            httpPost(FirebirdUtil.URL_ACCOUNT_LIST, paramsMap, false);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +112,14 @@ public class HomeActivity extends BaseActivity<UserAccountVO> {
             httpPost(FirebirdUtil.URL_ACCOUNT_LIST, paramsMap);
         }
         Log.d(TAG, "in onResume");
+
+        mHandler.postDelayed(runnable, 1000 * 5);// 间隔5秒
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mHandler.removeCallbacks(runnable);
     }
 
     @Override
@@ -223,7 +244,11 @@ public class HomeActivity extends BaseActivity<UserAccountVO> {
             holder.symbolGroup.setText(item.getSymbolGroup());
             holder.symbolDesc.setText(item.getSymbolDesc());
 
-            setViewText(holder.price, item.getPrice(), null, (item.getPrice() - item.getHoldPrice()));
+            int fixed = 4;
+            if (item.getPrice() >= 100) {
+                fixed = 2;
+            }
+            setViewText(holder.price, item.getPrice(), fixed, null, (item.getPrice() - item.getHoldPrice()));
             setViewText(holder.hold, item.getPrice() * item.getHoldAmount(), null, 0.0);
             setViewText(holder.rate, item.getRate(), "%", item.getRate());
             setViewText(holder.yestBenefit, item.getYestBenefit(), null, item.getYestBenefit());

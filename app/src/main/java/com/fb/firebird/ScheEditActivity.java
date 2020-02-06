@@ -21,11 +21,13 @@ import com.fb.firebird.dialog.RuleDialog;
 import com.fb.firebird.enums.JoinTypeEnum;
 import com.fb.firebird.enums.OpTypeEnum;
 import com.fb.firebird.enums.RuleTypeEnum;
-import com.fb.firebird.enums.ScheduleStatusEnum;
 import com.fb.firebird.enums.TradeTypeEnum;
+import com.fb.firebird.http.HttpCallback;
+import com.fb.firebird.http.HttpUtil;
 import com.fb.firebird.json.ResultData;
 import com.fb.firebird.model.RuleItemData;
 import com.fb.firebird.model.ScheduleItemData;
+import com.fb.firebird.utils.AesUtil;
 import com.fb.firebird.utils.FirebirdUtil;
 import com.fb.firebird.utils.FormatUtil;
 import com.fb.firebird.utils.IconUtil;
@@ -61,6 +63,12 @@ public class ScheEditActivity extends BaseActivity<String> implements CallbackLi
 
         Intent intent = getIntent();
         item = (ScheduleItemData) intent.getSerializableExtra("item");
+        if (null == item) {
+            item = new ScheduleItemData();
+        }
+        if (null == item.getRuleList()) {
+            item.setRuleList(new ArrayList<RuleItemData>());
+        }
 
         scheName = this.findViewById(R.id.sche_name);
         scheAmount = this.findViewById(R.id.sche_amount);
@@ -68,28 +76,25 @@ public class ScheEditActivity extends BaseActivity<String> implements CallbackLi
         radioBuy = this.findViewById(R.id.radio_buy);
         radioSold = this.findViewById(R.id.radio_sold);
 
-        if (null != item && item.getScheduleId() > 0) {
-            // set title
-            ImageView iconView = this.findViewById(R.id.img_header_icon);
-            iconView.setImageResource(IconUtil.getIcon(item.getSymbolGroup().toLowerCase()));
+        // set title
+        ImageView iconView = this.findViewById(R.id.img_header_icon);
+        iconView.setImageResource(IconUtil.getIcon(item.getSymbolGroup().toLowerCase()));
+        TextView titleView = this.findViewById(R.id.text_header_title);
+        titleView.setText(item.getSymbolDesc());
 
-            TextView titleView = this.findViewById(R.id.text_header_title);
-            titleView.setText(item.getSymbolDesc());
-
+        if (item.getScheduleId() > 0) {
             // set data
             scheName.setText(item.getName());
             scheAmount.setText(String.valueOf(item.getAmount()));
             scheStatus.setSelection(item.getStatus() - 1, true);
-            if(item.getType() == TradeTypeEnum.BUY.getCode()){
+            if (item.getType() == TradeTypeEnum.BUY.getCode()) {
                 radioBuy.setChecked(true);
                 radioSold.setChecked(false);
-            }else if(item.getType() == TradeTypeEnum.SOLD.getCode()){
+            } else if (item.getType() == TradeTypeEnum.SOLD.getCode()) {
                 radioBuy.setChecked(false);
                 radioSold.setChecked(true);
             }
         } else {
-            item = new ScheduleItemData();
-            item.setRuleList(new ArrayList<RuleItemData>());
             radioBuy.setChecked(true);
             radioSold.setChecked(false);
         }
@@ -115,6 +120,10 @@ public class ScheEditActivity extends BaseActivity<String> implements CallbackLi
             }
         });
 
+        if (null != item && item.getScheduleId() > 0) {
+            this.showRuleList();
+        }
+
         // button
         Button btnSave = findViewById(R.id.btn_save);
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -133,6 +142,61 @@ public class ScheEditActivity extends BaseActivity<String> implements CallbackLi
         });
     }
 
+    private void showRuleList() {
+        //获取数据
+        if (FirebirdUtil.isDebug) {
+            ResultData<RuleItemData> jsonData = JsonUtil.JsonFileToObject(this, "rulelist.json",
+                    new TypeToken<ResultData<RuleItemData>>() {
+                    }.getType());
+            adapter.setData(jsonData.getDataList());
+            adapter.notifyDataSetChanged();
+        } else {
+            Map<String, Object> paramsMap = new HashMap<>();
+            paramsMap.put("userId", item.getUserId());
+            paramsMap.put("ts", 1579760667789l);
+            paramsMap.put("token", "6c1e5239c801e8f004ac5c68ad23bea4");
+            paramsMap.put("symbolId", item.getSymbolId());
+            paramsMap.put("scheduleId", item.getScheduleId());
+            paramsMap.put("pageNumber", 1);
+            paramsMap.put("pageSize", 10);
+
+            String params = "q=" + AesUtil.encrypt(FormatUtil.getHttpParams(paramsMap));
+            byte[] postData = params.getBytes();
+            showLoading();
+            HttpUtil.getUtil().httpPost(FirebirdUtil.URL_SCHEDULE_RULES, postData,
+                    new HttpCallback<String>() {
+                        @Override
+                        public void onSuccess(final String response) {
+                            final ResultData<RuleItemData> jsonData = JsonUtil.JsonToObject(response,
+                                    new TypeToken<ResultData<RuleItemData>>() {
+                                    }.getType());
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    List<RuleItemData> ruleList = jsonData.getDataList();
+                                    if (null != ruleList && ruleList.size() > 0) {
+                                        adapter.setData(ruleList);
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                    hideLoading();
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onError(final String error) {
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showMessage(error);
+                                    hideLoading();
+                                }
+                            });
+                        }
+                    });
+        }
+    }
+
     public void addRuleItem(View view) {
         RuleItemData item = new RuleItemData();
         item.setId(0);
@@ -148,14 +212,16 @@ public class ScheEditActivity extends BaseActivity<String> implements CallbackLi
         item.setName(scheName.getText().toString());
         item.setAmount(Double.parseDouble(scheAmount.getText().toString()));
         item.setStatus(scheStatus.getSelectedItemPosition() + 1);
-        if(radioBuy.isChecked()){
-           item.setType(TradeTypeEnum.BUY.getCode());
-        }else if(radioSold.isChecked()){
+        if (radioBuy.isChecked()) {
+            item.setType(TradeTypeEnum.BUY.getCode());
+        } else if (radioSold.isChecked()) {
             item.setType(TradeTypeEnum.SOLD.getCode());
         }
         Log.d(TAG, JsonUtil.toJSONString(item));
 
-        httpPost(FirebirdUtil.URL_SCHEDULE_SAVE, JsonUtil.toMap(item));
+        Map<String, Object> paramsMap = JsonUtil.objToMap(item);
+        paramsMap.put("ruleList", JsonUtil.toJSONString(item.getRuleList()));
+        httpPost(FirebirdUtil.URL_SCHEDULE_SAVE, paramsMap);
     }
 
     @Override
@@ -165,7 +231,7 @@ public class ScheEditActivity extends BaseActivity<String> implements CallbackLi
 
     @Override
     public Type getDataType() {
-        return new TypeToken<String>() {
+        return new TypeToken<ResultData<String>>() {
         }.getType();
     }
 

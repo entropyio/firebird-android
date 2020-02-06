@@ -15,10 +15,10 @@ import java.util.concurrent.Executors;
 
 public class HttpUtil {
     private static final String TAG = HttpUtil.class.getSimpleName();
+    private static final String ENCODE = "UTF-8";
     private static int POOL_SIZE = 4;
     private static int READ_TIME_OUT = 5 * 1000;
     private static int CONNECT_TIME_OUT = 5 * 1000;
-    private static final String ENCODE = "UTF-8";
     private static ExecutorService sExecutorService;
     private static HttpUtil util;
 

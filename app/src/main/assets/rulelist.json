@@ -1,0 +1,34 @@
+{
+  "dataList": [
+    {
+      "id": 2,
+      "userId": 1,
+      "symbolId": 1,
+      "scheduleId": 1,
+      "ruleType": 2,
+      "joinType": 2,
+      "opType": 6,
+      "opValue": "",
+      "status": 1,
+      "gmtCreate": "2020-02-06 12:31:14",
+      "gmtModified": "2020-02-06 12:31:14"
+    },
+    {
+      "id": 1,
+      "userId": 1,
+      "symbolId": 1,
+      "scheduleId": 1,
+      "ruleType": 1,
+      "joinType": 2,
+      "opType": 6,
+      "opValue": "",
+      "status": 1,
+      "gmtCreate": "2020-02-06 12:31:14",
+      "gmtModified": "2020-02-06 12:31:14"
+    }
+  ],
+  "message": "SUCCESS",
+  "pageNum": 1,
+  "retCode": 0,
+  "totalCount": 2
+}

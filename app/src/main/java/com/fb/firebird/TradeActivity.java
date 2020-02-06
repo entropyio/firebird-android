@@ -2,6 +2,7 @@ package com.fb.firebird;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,7 +32,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class TradeActivity extends BaseActivity<UserTradeVO> implements CallbackListener {
@@ -206,7 +206,7 @@ public class TradeActivity extends BaseActivity<UserTradeVO> implements Callback
         paramsMap.put("amount", amount);
         paramsMap.put("type", type);
 
-        httpPost(FirebirdUtil.URL_TRADE_SAVE, paramsMap, "添加成功");
+        httpPost(FirebirdUtil.URL_TRADE_SAVE, paramsMap, "添加成功", true);
     }
 
     @Override
@@ -269,7 +269,6 @@ public class TradeActivity extends BaseActivity<UserTradeVO> implements Callback
                 // 通过findViewById()方法实例R.layout.item_list内各组件
                 holder.tradeType = convertView.findViewById(R.id.trade_type);
                 holder.tradeName = convertView.findViewById(R.id.trade_name);
-                holder.tradeIcon = convertView.findViewById(R.id.trade_icon);
                 holder.tradePrice = convertView.findViewById(R.id.trade_price);
                 holder.tradeAmount = convertView.findViewById(R.id.trade_amount);
                 holder.tradeTotal = convertView.findViewById(R.id.trade_total);
@@ -282,8 +281,16 @@ public class TradeActivity extends BaseActivity<UserTradeVO> implements Callback
             // 给holder中的控件进行赋值
             TradeItemData item = data.get(position);
             holder.tradeType.setText(TradeTypeEnum.getStatusDesc(item.getType()));
+            if (item.getType() == TradeTypeEnum.BUY.getCode()) {
+                holder.tradeType.setTextColor(getResources().getColor(R.color.positive));
+            } else if (item.getType() == TradeTypeEnum.SOLD.getCode()) {
+                holder.tradeType.setTextColor(getResources().getColor(R.color.white));
+            }
             holder.tradeName.setText(item.getName());
-            holder.tradeIcon.setImageResource(item.getIcon());
+            Drawable drawable = getResources().getDrawable(item.getIcon());
+            drawable.setBounds(0, 0, 36, 36);
+            holder.tradeName.setCompoundDrawables(drawable, null, null, null);
+
             holder.tradePrice.setText(FormatUtil.formatNumber(item.getPrice()));
             holder.tradeAmount.setText(FormatUtil.formatNumber(item.getAmount()));
             holder.tradeTotal.setText(FormatUtil.formatNumber(item.getPrice() * item.getAmount()));
@@ -296,7 +303,6 @@ public class TradeActivity extends BaseActivity<UserTradeVO> implements Callback
     class ViewHolder {
         TextView tradeType;
         TextView tradeName;
-        ImageView tradeIcon;
         TextView tradePrice;
         TextView tradeAmount;
         TextView tradeTotal;

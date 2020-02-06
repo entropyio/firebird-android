@@ -29,17 +29,14 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
 
     public long userId;
     public long symbolId;
-
-    private LoadingDialog loadingDialog;
-
-    private LoginDialog loginDialog;
-
     public Handler mHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
             return false;
         }
     });
+    private LoadingDialog loadingDialog;
+    private LoginDialog loginDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +49,9 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
     }
 
     public void showLoading() {
-        loadingDialog.show();
+        if (null != loadingDialog && !loadingDialog.isShowing()) {
+            loadingDialog.show();
+        }
     }
 
     public void hideLoading() {
@@ -62,11 +61,17 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
     }
 
     public void httpPost(String url, Map<String, Object> paramsMap) {
-        httpPost(url, paramsMap, null);
+        httpPost(url, paramsMap, null, true);
     }
 
-    public void httpPost(String url, Map<String, Object> paramsMap, final String message) {
-        showLoading();
+    public void httpPost(String url, Map<String, Object> paramsMap, boolean showLoading) {
+        httpPost(url, paramsMap, null, showLoading);
+    }
+
+    public void httpPost(String url, Map<String, Object> paramsMap, final String message, boolean showLoading) {
+        if (showLoading) {
+            showLoading();
+        }
         // todo: append userId, ts and token to params
         if (null == paramsMap) {
             paramsMap = new HashMap<>();
@@ -89,6 +94,12 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
                             @Override
                             public void run() {
                                 // handle error code
+                                if (null == jsonData) {
+                                    showMessage("数据格式错误");
+                                    hideLoading();
+                                    return;
+                                }
+
                                 if (jsonData.getRetCode() == RetCodeEnum.SUCCESS.getCode()) {
                                     if (null != message) {
                                         showMessage(message);
@@ -111,7 +122,7 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                showMessage(error);
+                                showMessage("网络连接失败");
                                 hideLoading();
                             }
                         });
@@ -134,11 +145,15 @@ public abstract class BaseActivity<T> extends AppCompatActivity {
     public abstract void updateData(ResultData<T> data);
 
     public void showMessage(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     public void setViewText(TextView view, double value, String append, double colorType) {
-        String text = FormatUtil.formatNumber(value);
+        this.setViewText(view, value, 2, append, colorType);
+    }
+
+    public void setViewText(TextView view, double value, int fixed, String append, double colorType) {
+        String text = FormatUtil.formatNumber(value, fixed);
         if (null != append) {
             text += append;
         }

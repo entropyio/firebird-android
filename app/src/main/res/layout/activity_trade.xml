@@ -6,15 +6,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp">
+        android:layout_height="40dp">
 
         <include layout="@layout/activity_header" />
     </RelativeLayout>
 
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_trade"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/tab_trade">
+        android:layout_height="40dp">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

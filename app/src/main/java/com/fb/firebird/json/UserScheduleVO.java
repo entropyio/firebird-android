@@ -15,5 +15,5 @@ public class UserScheduleVO extends BaseVO implements Serializable {
     private double total;
     private int failed;
     private int success;
-    private List<RuleItemVO> ruleItemList;
+    private List<RuleItemVO> ruleList;
 }

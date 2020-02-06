@@ -6,21 +6,21 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="40dp"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="6dp">
 
         <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:src="@drawable/eos" />
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="28dp"
             android:paddingLeft="20dp"
             android:text="EOS/USDT"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <ImageView
@@ -33,8 +33,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
         android:paddingTop="20dp"
+        android:paddingRight="10dp"
         android:paddingBottom="10dp">
 
         <TextView
@@ -59,22 +59,22 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:paddingRight="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="价格"
             android:paddingRight="20dp"
+            android:text="价格"
             android:textSize="18sp" />
 
         <EditText
             android:id="@+id/editText_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="输入价格"
             android:ems="4"
+            android:hint="输入价格"
             android:inputType="number|numberDecimal" />
     </LinearLayout>
 
@@ -83,14 +83,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp">
+        android:paddingTop="10dp"
+        android:paddingRight="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="数量"
             android:paddingRight="20dp"
+            android:text="数量"
             android:textSize="18sp" />
 
         <EditText
@@ -112,9 +112,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:paddingTop="30dp"
+        android:paddingRight="10dp"
         android:paddingBottom="30dp">
 
         <TextView
@@ -126,8 +126,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="USDT"
             android:layout_alignParentRight="true"
+            android:text="USDT"
             android:textSize="18sp" />
     </RelativeLayout>
 

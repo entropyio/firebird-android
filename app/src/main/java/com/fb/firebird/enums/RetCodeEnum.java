@@ -11,6 +11,15 @@ public enum RetCodeEnum {
 
     NEED_LOGIN(10, "待认证");
 
+    private static Map<Integer, RetCodeEnum> map = new HashMap<>();
+
+    static {
+        RetCodeEnum[] types = RetCodeEnum.values();
+        for (int i = 0; i < types.length; i++) {
+            map.put(types[i].getCode(), types[i]);
+        }
+    }
+
     @Getter
     private final int code;
     @Getter
@@ -19,15 +28,6 @@ public enum RetCodeEnum {
     RetCodeEnum(int code, String desc) {
         this.code = code;
         this.desc = desc;
-    }
-
-    private static Map<Integer, RetCodeEnum> map = new HashMap<>();
-
-    static {
-        RetCodeEnum[] types = RetCodeEnum.values();
-        for (int i = 0; i < types.length; i++) {
-            map.put(types[i].getCode(), types[i]);
-        }
     }
 
     public static RetCodeEnum getEnum(int code) {

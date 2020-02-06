@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 public class FormatUtil {
+    private static final SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
     public static String formatDateToMD(String str) {
         SimpleDateFormat sf1 = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat sf2 = new SimpleDateFormat("MM-dd");
@@ -35,11 +37,24 @@ public class FormatUtil {
         return new java.text.DecimalFormat("###,###,##0.00").format(number);
     }
 
-    public static String formatInputNumber(double number) {
-        return new java.text.DecimalFormat("########0.00").format(number);
+    public static String formatNumber(double number, int fixed) {
+        return new java.text.DecimalFormat("###,###,##0." + getNumberFixedFomatter(fixed)).format(number);
     }
 
-    private static final SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    public static String formatInputNumber(double number, int fixed) {
+        return new java.text.DecimalFormat("########0." + getNumberFixedFomatter(fixed)).format(number);
+    }
+
+    private static String getNumberFixedFomatter(int fixed) {
+        StringBuilder sb = new StringBuilder();
+        if (fixed < 0) {
+            fixed = 2;
+        }
+        for (int i = 0; i < fixed; i++) {
+            sb.append('0');
+        }
+        return sb.toString();
+    }
 
     public static String getDatetimeStr(Date date) {
         String formatStr = "";

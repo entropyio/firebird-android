@@ -23,13 +23,12 @@ import java.util.Locale;
 
 public class LineChartMarkView extends MarkerView {
 
+    DecimalFormat df = new DecimalFormat("0.00");
     private TextView tvDate;
     private TextView tvValue0;
     private TextView tvValue1;
     private TextView tvValue2;
-
     private ValueFormatter xAxisValueFormatter;
-    DecimalFormat df = new DecimalFormat("0.00");
 
     public LineChartMarkView(Context context, ValueFormatter xAxisValueFormatter) {
         super(context, R.layout.chart_markview);

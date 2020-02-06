@@ -23,6 +23,7 @@ public class FirebirdUtil {
 
     public static final String URL_SCHEDULE_LIST = HOST_URL + "/user/schedule/list";
     public static final String URL_SCHEDULE_SAVE = HOST_URL + "/user/schedule/save";
+    public static final String URL_SCHEDULE_RULES = HOST_URL + "/user/rule/list";
 
     public static final String URL_DATA_LIST = HOST_URL + "/user/data/list";
 }

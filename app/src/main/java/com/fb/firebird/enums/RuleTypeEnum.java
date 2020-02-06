@@ -13,6 +13,15 @@ public enum RuleTypeEnum {
     BENEFIT(1, "收益率"),
     PRICE(2, "价格");
 
+    private static Map<Integer, RuleTypeEnum> map = new HashMap<>();
+
+    static {
+        RuleTypeEnum[] types = RuleTypeEnum.values();
+        for (int i = 0; i < types.length; i++) {
+            map.put(types[i].getCode(), types[i]);
+        }
+    }
+
     @Getter
     private final int code;
     @Getter
@@ -21,15 +30,6 @@ public enum RuleTypeEnum {
     RuleTypeEnum(int code, String desc) {
         this.code = code;
         this.desc = desc;
-    }
-
-    private static Map<Integer, RuleTypeEnum> map = new HashMap<>();
-
-    static {
-        RuleTypeEnum[] types = RuleTypeEnum.values();
-        for (int i = 0; i < types.length; i++) {
-            map.put(types[i].getCode(), types[i]);
-        }
     }
 
     public static RuleTypeEnum getEnum(int code) {

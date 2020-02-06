@@ -144,6 +144,16 @@ public class ScheDetailActivity extends BaseActivity<UserTradeVO> {
         adapter.notifyDataSetChanged();
     }
 
+    private void setViewStatus(TextView view, int status) {
+        view.setText(TradeStatusEnum.getStatusDesc(status));
+
+        if (status == TradeStatusEnum.SUCCESS.getCode()) {
+            view.setTextColor(this.getResources().getColor(R.color.positive));
+        } else if (status == TradeStatusEnum.FAILED.getCode()) {
+            view.setTextColor(this.getResources().getColor(R.color.negative));
+        }
+    }
+
     /*ListView适配器**/
     public class ListViewAdapter extends BaseAdapter {
         private List<SDItemData> data;
@@ -213,15 +223,5 @@ public class ScheDetailActivity extends BaseActivity<UserTradeVO> {
         TextView totalText;
         TextView statusText;
         TextView reasonText;
-    }
-
-    private void setViewStatus(TextView view, int status) {
-        view.setText(TradeStatusEnum.getStatusDesc(status));
-
-        if (status == TradeStatusEnum.SUCCESS.getCode()) {
-            view.setTextColor(this.getResources().getColor(R.color.positive));
-        } else if (status == TradeStatusEnum.FAILED.getCode()) {
-            view.setTextColor(this.getResources().getColor(R.color.negative));
-        }
     }
 }

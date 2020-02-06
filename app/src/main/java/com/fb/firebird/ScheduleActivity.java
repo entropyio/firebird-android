@@ -76,6 +76,9 @@ public class ScheduleActivity extends BaseActivity<UserScheduleVO> {
                     if (null != item) {
                         scheItem.setUserId(item.getUserId());
                         scheItem.setSymbolId(item.getSymbolId());
+                        scheItem.setSymbolIcon(item.getSymbolIcon());
+                        scheItem.setSymbolDesc(item.getSymbolDesc());
+                        scheItem.setSymbolGroup(item.getSymbolGroup());
                     }
 
                     Intent intent = new Intent(ScheduleActivity.this, ScheEditActivity.class);
@@ -123,6 +126,7 @@ public class ScheduleActivity extends BaseActivity<UserScheduleVO> {
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("userId", userId);
         paramsMap.put("symbolId", symbolId);
+        paramsMap.put("type", type);
         paramsMap.put("status", status);
         paramsMap.put("pageNumber", pageNumber);
 
@@ -155,6 +159,7 @@ public class ScheduleActivity extends BaseActivity<UserScheduleVO> {
             item.setSuccess(ut.getSuccess());
             item.setFailed(ut.getFailed());
             item.setStatus(ut.getStatus());
+
             data.add(item);
         }
         scheduleAdapter.setData(data);
@@ -224,8 +229,8 @@ public class ScheduleActivity extends BaseActivity<UserScheduleVO> {
 
             holder.nameText.setText(item.getName());
             holder.typeText.setText(TradeTypeEnum.getStatusDesc(item.getType()));
-            holder.amountText.setText(FormatUtil.formatNumber(item.getAmount()));
-            holder.totalText.setText(FormatUtil.formatNumber(item.getTotal()));
+            holder.amountText.setText(FormatUtil.formatNumber(item.getAmount(), 4));
+            holder.totalText.setText(FormatUtil.formatNumber(item.getTotal(), 4));
             holder.countText.setText(String.valueOf(item.getSuccess() + item.getFailed()));
             holder.statusText.setText(ScheduleStatusEnum.getStatusDesc(item.getStatus()));
             return convertView;

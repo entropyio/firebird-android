@@ -39,7 +39,7 @@ public class OptActivity extends BaseActivity<String> {
         editorPrice = this.findViewById(R.id.editText_price);
         editorAmount = this.findViewById(R.id.editText_amount);
 
-        editorPrice.setText(FormatUtil.formatInputNumber(item.getPrice()));
+        editorPrice.setText(FormatUtil.formatInputNumber(item.getPrice(), 4));
 
         Button btnOpt = this.findViewById(R.id.btn_save);
         if (opType == TradeTypeEnum.BUY.getCode()) {
@@ -48,7 +48,7 @@ public class OptActivity extends BaseActivity<String> {
         } else if (opType == TradeTypeEnum.SOLD.getCode()) {
             this.setTitle("卖出" + item.getSymbolDesc());
             btnOpt.setText("卖出");
-            editorAmount.setHint(FormatUtil.formatInputNumber(item.getHoldAmount()));
+            editorAmount.setHint(FormatUtil.formatInputNumber(item.getHoldAmount(), 4));
         }
         btnOpt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,8 +91,8 @@ public class OptActivity extends BaseActivity<String> {
 
         // send request
         Map<String, Object> paramsMap = new HashMap<>();
-        paramsMap.put("userId", userId);
-        paramsMap.put("symbolId", symbolId);
+        paramsMap.put("userId", item.getUserId());
+        paramsMap.put("symbolId", item.getSymbolId());
         paramsMap.put("status", TradeStatusEnum.SUCCESS.getCode());
         paramsMap.put("price", price);
         paramsMap.put("amount", amount);
@@ -103,7 +103,7 @@ public class OptActivity extends BaseActivity<String> {
 
     @Override
     public Type getDataType() {
-        return new TypeToken<String>() {
+        return new TypeToken<ResultData<String>>() {
         }.getType();
     }
 
