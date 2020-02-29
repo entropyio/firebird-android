@@ -104,7 +104,7 @@ public class LoginDialog extends Dialog {
         String params = String.format("username=%s&pwd=%s", name, pwd);
         params = "q=" + AesUtil.encrypt(params);
         byte[] postData = params.getBytes();
-        HttpUtil.getUtil().httpPost(FirebirdUtil.URL_USER_LOGIN, postData,
+        HttpUtil.getUtil().httpPost(FirebirdUtil.HTTP_SERVER+FirebirdUtil.URL_USER_LOGIN, postData,
                 new HttpCallback<String>() {
                     @Override
                     public void onSuccess(final String response) {

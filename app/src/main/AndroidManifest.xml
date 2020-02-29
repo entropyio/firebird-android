@@ -12,7 +12,7 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".HomeActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +28,7 @@
         <activity android:name=".ScheDetailActivity" />
         <activity android:name=".ScheEditActivity" />
         <activity android:name=".OptActivity" />
+        <activity android:name=".SettingActivity" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

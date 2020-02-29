@@ -118,7 +118,7 @@ public class ScheDetailActivity extends BaseActivity<UserTradeVO> {
         paramsMap.put("pageNumber", pageNumber);
         paramsMap.put("scheduleId", scheduleId);
 
-        httpPost(FirebirdUtil.URL_TRADE_LIST, paramsMap);
+        httpPost(FirebirdUtil.HTTP_SERVER+FirebirdUtil.URL_TRADE_LIST, paramsMap);
     }
 
     @Override

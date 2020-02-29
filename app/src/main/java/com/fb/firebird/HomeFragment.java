@@ -1,6 +1,5 @@
 package com.fb.firebird;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +11,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 
 import com.fb.firebird.json.ResultData;
 import com.fb.firebird.json.UserAccountVO;
@@ -28,18 +30,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HomeActivity extends BaseActivity<UserAccountVO> {
-    private static final String TAG = HomeActivity.class.getSimpleName();
+public class HomeFragment extends BaseFragment<UserAccountVO> {
+    private static final String TAG = HomeFragment.class.getSimpleName();
 
     private ListView listView;
-    private HomeListAdapter adapter;
-
+    private HomeFragment.HomeListAdapter adapter;
 
     private TextView totalText;
     private TextView rateText;
     private TextView nowText;
     private TextView holdText;
     private TextView allText;
+
     private Runnable runnable = new Runnable() {
         public void run() {
             this.update();
@@ -55,21 +57,22 @@ public class HomeActivity extends BaseActivity<UserAccountVO> {
     };
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.activity_home, container, false);
 
-        listView = this.findViewById(R.id.listview_home);
+        listView = root.findViewById(R.id.listview_home);
         // header
-        View headView = View.inflate(this, R.layout.section_header, null);
+        View headView = View.inflate(this.getActivity(), R.layout.section_header, null);
         listView.addHeaderView(headView);
 
         // adapter
         List<HomeItemData> data = new ArrayList<>();
-        adapter = new HomeListAdapter(this, data);
+        adapter = new HomeFragment.HomeListAdapter(inflater, data);
         listView.setAdapter(adapter);
 
         // click
+        final FragmentActivity _context = this.getActivity();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -81,49 +84,51 @@ public class HomeActivity extends BaseActivity<UserAccountVO> {
                 HomeItemData item = (HomeItemData) adapter.getItem(position - 1);
                 Log.d(TAG, "click on " + item.getSymbolDesc());
 
-                Intent intent = new Intent(HomeActivity.this, DetailActivity.class);
+                Intent intent = new Intent(_context, DetailActivity.class);
                 intent.putExtra("item", item);
                 startActivity(intent);
             }
         });
 
         // text views
-        totalText = this.findViewById(R.id.text_amount_total);
-        rateText = this.findViewById(R.id.text_benefit_rate);
-        nowText = this.findViewById(R.id.text_amount_now);
-        holdText = this.findViewById(R.id.text_amount_hold);
-        allText = this.findViewById(R.id.text_amount_benefit);
+        totalText = root.findViewById(R.id.text_amount_total);
+        rateText = root.findViewById(R.id.text_benefit_rate);
+        nowText = root.findViewById(R.id.text_amount_now);
+        holdText = root.findViewById(R.id.text_amount_hold);
+        allText = root.findViewById(R.id.text_amount_benefit);
 
         // click
-        ImageView button = this.findViewById(R.id.img_show_benefit);
+        ImageView button = root.findViewById(R.id.img_show_benefit);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "showBenefit");
-                Intent intent = new Intent(HomeActivity.this, BenefitActivity.class);
+                Intent intent = new Intent(_context, BenefitActivity.class);
                 startActivity(intent);
             }
         });
 
-        button = this.findViewById(R.id.img_show_trade);
+        button = root.findViewById(R.id.img_show_trade);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "showTrade");
-                Intent intent = new Intent(HomeActivity.this, TradeActivity.class);
+                Intent intent = new Intent(_context, TradeActivity.class);
                 startActivity(intent);
             }
         });
 
-        button = this.findViewById(R.id.img_show_schedule);
+        button = root.findViewById(R.id.img_show_schedule);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "showSchedule");
-                Intent intent = new Intent(HomeActivity.this, ScheduleActivity.class);
+                Intent intent = new Intent(_context, ScheduleActivity.class);
                 startActivity(intent);
             }
         });
+
+        return root;
     }
 
     @Override
@@ -133,7 +138,7 @@ public class HomeActivity extends BaseActivity<UserAccountVO> {
         if (FirebirdUtil.isDebug) {
             Type type = this.getDataType();
 
-            ResultData<UserAccountVO> jsonData = JsonUtil.JsonFileToObject(this, "home.json",
+            ResultData<UserAccountVO> jsonData = JsonUtil.JsonFileToObject(this.getActivity(), "home.json",
                     type);
             updateData(jsonData);
         } else {
@@ -199,33 +204,13 @@ public class HomeActivity extends BaseActivity<UserAccountVO> {
         adapter.notifyDataSetChanged();
     }
 
-    public void showBenefits(View view) {
-        Log.d(TAG, "showBenefits");
-        Intent intent = new Intent(HomeActivity.this, BenefitActivity.class);
-        startActivity(intent);
-    }
-
-    public void showTrades(View view) {
-        Log.d(TAG, "showTrades");
-        Intent intent = new Intent(HomeActivity.this, TradeActivity.class);
-        startActivity(intent);
-    }
-
-    public void showSchedule(View view) {
-        Log.d(TAG, "showSchedule");
-        Intent intent = new Intent(HomeActivity.this, ScheduleActivity.class);
-        startActivity(intent);
-    }
-
     /*ListView适配器**/
     public class HomeListAdapter extends BaseAdapter {
         private List<HomeItemData> data;
         private LayoutInflater layoutInflater;
-        private Context context;
 
-        public HomeListAdapter(Context context, List<HomeItemData> data) {
-            this.context = context;
-            this.layoutInflater = LayoutInflater.from(this.context);
+        public HomeListAdapter(LayoutInflater inflater, List<HomeItemData> data) {
+            this.layoutInflater = inflater;
             this.data = data;
         }
 
@@ -250,11 +235,11 @@ public class HomeActivity extends BaseActivity<UserAccountVO> {
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder = null;
+            HomeFragment.ViewHolder holder = null;
             /*View复用*/
             if (convertView == null) {
                 convertView = layoutInflater.inflate(R.layout.activity_home_item, null);
-                holder = new ViewHolder();
+                holder = new HomeFragment.ViewHolder();
                 // 通过findViewById()方法实例R.layout.item_list内各组件
                 holder.symbolIcon = convertView.findViewById(R.id.symbol_icon);
                 holder.symbolGroup = convertView.findViewById(R.id.symbol_group);
@@ -267,7 +252,7 @@ public class HomeActivity extends BaseActivity<UserAccountVO> {
 
                 convertView.setTag(holder);
             }
-            holder = (ViewHolder) convertView.getTag();
+            holder = (HomeFragment.ViewHolder) convertView.getTag();
 
             // 给holder中的控件进行赋值
             HomeItemData item = data.get(position);

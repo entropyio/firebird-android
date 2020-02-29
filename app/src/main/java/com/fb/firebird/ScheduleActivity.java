@@ -130,7 +130,7 @@ public class ScheduleActivity extends BaseActivity<UserScheduleVO> {
         paramsMap.put("status", status);
         paramsMap.put("pageNumber", pageNumber);
 
-        httpPost(FirebirdUtil.URL_SCHEDULE_LIST, paramsMap);
+        httpPost(FirebirdUtil.HTTP_SERVER+FirebirdUtil.URL_SCHEDULE_LIST, paramsMap);
     }
 
     @Override

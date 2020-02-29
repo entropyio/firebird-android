@@ -131,27 +131,27 @@
             android:layout_height="match_parent">
 
             <ImageView
+                android:id="@+id/img_show_benefit"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:clickable="true"
                 android:gravity="center"
-                android:onClick="showBenefits"
                 android:src="@drawable/benefit" />
 
             <ImageView
+                android:id="@+id/img_show_trade"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:clickable="true"
                 android:gravity="center"
-                android:onClick="showTrades"
                 android:src="@drawable/trade" />
 
             <ImageView
+                android:id="@+id/img_show_schedule"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:clickable="true"
                 android:gravity="center"
-                android:onClick="showSchedule"
                 android:src="@drawable/schedule" />
         </TableRow>
 

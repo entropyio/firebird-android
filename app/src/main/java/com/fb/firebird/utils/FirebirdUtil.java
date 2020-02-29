@@ -3,7 +3,7 @@ package com.fb.firebird.utils;
 public class FirebirdUtil {
     public static final boolean isDebug = false;
 
-    public static final String HOST_URL = "http://192.168.1.106:8080";
+    public static String HTTP_SERVER = "http://192.168.1.101:8080";
 
     public static final int DEFAULT_PAGE_NUMBER = 1;
 
@@ -12,18 +12,18 @@ public class FirebirdUtil {
     public static final int OPT_DELETE = 3;
 
     // APIs
-    public static final String URL_USER_LOGIN = HOST_URL + "/user/login";
-    public static final String URL_USER_LOGOUT = HOST_URL + "/user/logout";
+    public static final String URL_USER_LOGIN = "/user/login";
+    public static final String URL_USER_LOGOUT = "/user/logout";
 
-    public static final String URL_ACCOUNT_LIST = HOST_URL + "/current/account/list";
-    public static final String URL_ACCOUNT_DETAIL = HOST_URL + "/current/account/get";
+    public static final String URL_ACCOUNT_LIST = "/current/account/list";
+    public static final String URL_ACCOUNT_DETAIL = "/current/account/get";
 
-    public static final String URL_TRADE_LIST = HOST_URL + "/user/trade/list";
-    public static final String URL_TRADE_SAVE = HOST_URL + "/user/trade/save";
+    public static final String URL_TRADE_LIST = "/user/trade/list";
+    public static final String URL_TRADE_SAVE = "/user/trade/save";
 
-    public static final String URL_SCHEDULE_LIST = HOST_URL + "/user/schedule/list";
-    public static final String URL_SCHEDULE_SAVE = HOST_URL + "/user/schedule/save";
-    public static final String URL_SCHEDULE_RULES = HOST_URL + "/user/rule/list";
+    public static final String URL_SCHEDULE_LIST = "/user/schedule/list";
+    public static final String URL_SCHEDULE_SAVE = "/user/schedule/save";
+    public static final String URL_SCHEDULE_RULES = "/user/rule/list";
 
-    public static final String URL_DATA_LIST = HOST_URL + "/user/data/list";
+    public static final String URL_DATA_LIST = "/user/data/list";
 }

@@ -186,7 +186,7 @@ public class TradeActivity extends BaseActivity<UserTradeVO> implements Callback
         paramsMap.put("pageNumber", pageNumber);
         paramsMap.put("type", type);
 
-        httpPost(FirebirdUtil.URL_TRADE_LIST, paramsMap);
+        httpPost(FirebirdUtil.HTTP_SERVER+FirebirdUtil.URL_TRADE_LIST, paramsMap);
     }
 
     @Override
@@ -206,7 +206,7 @@ public class TradeActivity extends BaseActivity<UserTradeVO> implements Callback
         paramsMap.put("amount", amount);
         paramsMap.put("type", type);
 
-        httpPost(FirebirdUtil.URL_TRADE_SAVE, paramsMap, "添加成功", true);
+        httpPost(FirebirdUtil.HTTP_SERVER+FirebirdUtil.URL_TRADE_SAVE, paramsMap, "添加成功", true);
     }
 
     @Override

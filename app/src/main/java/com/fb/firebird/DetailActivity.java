@@ -2,6 +2,7 @@ package com.fb.firebird;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -66,7 +67,7 @@ public class DetailActivity extends BaseActivity<UserAccountVO> {
             Map<String, Object> paramsMap = new HashMap<>();
             paramsMap.put("userId", item.getUserId());
             paramsMap.put("symbolId", item.getSymbolId());
-            httpPost(FirebirdUtil.URL_ACCOUNT_DETAIL, paramsMap, false);
+            httpPost(FirebirdUtil.HTTP_SERVER+FirebirdUtil.URL_ACCOUNT_DETAIL, paramsMap, false);
         }
     };
 
@@ -91,6 +92,37 @@ public class DetailActivity extends BaseActivity<UserAccountVO> {
         holdText = this.findViewById(R.id.text_amount_hold);
         allText = this.findViewById(R.id.text_amount_benefit);
         priceText = this.findViewById(R.id.text_price);
+
+        // click
+        ImageView button = this.findViewById(R.id.img_show_benefit);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "showBenefit");
+                Intent intent = new Intent(DetailActivity.this, BenefitActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        button = this.findViewById(R.id.img_show_trade);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "showTrade");
+                Intent intent = new Intent(DetailActivity.this, TradeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        button = this.findViewById(R.id.img_show_schedule);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "showSchedule");
+                Intent intent = new Intent(DetailActivity.this, ScheduleActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // tab
         TabLayout tabs = findViewById(R.id.tab_chart);
@@ -125,7 +157,7 @@ public class DetailActivity extends BaseActivity<UserAccountVO> {
             Map<String, Object> paramsMap = new HashMap<>();
             paramsMap.put("userId", item.getUserId());
             paramsMap.put("symbolId", item.getSymbolId());
-            httpPost(FirebirdUtil.URL_ACCOUNT_DETAIL, paramsMap);
+            httpPost(FirebirdUtil.HTTP_SERVER+FirebirdUtil.URL_ACCOUNT_DETAIL, paramsMap);
         }
 
         mHandler.postDelayed(runnable, 1000 * 5);// 间隔5秒
@@ -157,24 +189,6 @@ public class DetailActivity extends BaseActivity<UserAccountVO> {
         this.setViewText(holdText, account.getYestBenefit(), null, account.getYestBenefit());
         this.setViewText(allText, account.getTotalBenefit(), null, account.getTotalBenefit());
         this.setViewText(priceText, account.getPrice(), 4, " ", account.getPrice() - account.getHoldPrice());
-    }
-
-    public void showBenefits(View view) {
-        Intent intent = new Intent(DetailActivity.this, BenefitActivity.class);
-        intent.putExtra("item", item);
-        startActivity(intent);
-    }
-
-    public void showTrades(View view) {
-        Intent intent = new Intent(DetailActivity.this, TradeActivity.class);
-        intent.putExtra("item", item);
-        startActivity(intent);
-    }
-
-    public void showSchedule(View view) {
-        Intent intent = new Intent(DetailActivity.this, ScheduleActivity.class);
-        intent.putExtra("item", item);
-        startActivity(intent);
     }
 
     public void doSold(View view) {
@@ -212,7 +226,7 @@ public class DetailActivity extends BaseActivity<UserAccountVO> {
             String params = "q=" + AesUtil.encrypt(FormatUtil.getHttpParams(paramsMap));
             byte[] postData = params.getBytes();
             showLoading();
-            HttpUtil.getUtil().httpPost(FirebirdUtil.URL_DATA_LIST, postData,
+            HttpUtil.getUtil().httpPost(FirebirdUtil.HTTP_SERVER+FirebirdUtil.URL_DATA_LIST, postData,
                     new HttpCallback<String>() {
                         @Override
                         public void onSuccess(final String response) {

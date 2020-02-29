@@ -102,6 +102,44 @@
             android:inputType="number|numberDecimal" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="20dp"
+            android:text="涨幅"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn_rate_sub"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="-"></Button>
+        <EditText
+            android:id="@+id/editText_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="4"
+            android:text="0"
+
+
+            android:gravity="center"
+            android:inputType="number|numberDecimal" />
+
+        <Button
+            android:id="@+id/btn_rate_add"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="+"></Button>
+    </LinearLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

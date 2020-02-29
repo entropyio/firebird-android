@@ -149,7 +149,7 @@ public class BenefitActivity extends BaseActivity<BenefitVO> {
         paramsMap.put("symbolId", symbolId);
         paramsMap.put("status", status);
         paramsMap.put("pageSize", pageSize);
-        httpPost(FirebirdUtil.URL_DATA_LIST, paramsMap);
+        httpPost(FirebirdUtil.HTTP_SERVER+FirebirdUtil.URL_DATA_LIST, paramsMap);
     }
 
     @Override

@@ -163,7 +163,7 @@ public class ScheEditActivity extends BaseActivity<String> implements CallbackLi
             String params = "q=" + AesUtil.encrypt(FormatUtil.getHttpParams(paramsMap));
             byte[] postData = params.getBytes();
             showLoading();
-            HttpUtil.getUtil().httpPost(FirebirdUtil.URL_SCHEDULE_RULES, postData,
+            HttpUtil.getUtil().httpPost(FirebirdUtil.HTTP_SERVER+FirebirdUtil.URL_SCHEDULE_RULES, postData,
                     new HttpCallback<String>() {
                         @Override
                         public void onSuccess(final String response) {
@@ -221,7 +221,7 @@ public class ScheEditActivity extends BaseActivity<String> implements CallbackLi
 
         Map<String, Object> paramsMap = JsonUtil.objToMap(item);
         paramsMap.put("ruleList", JsonUtil.toJSONString(item.getRuleList()));
-        httpPost(FirebirdUtil.URL_SCHEDULE_SAVE, paramsMap);
+        httpPost(FirebirdUtil.HTTP_SERVER+FirebirdUtil.URL_SCHEDULE_SAVE, paramsMap);
     }
 
     @Override
